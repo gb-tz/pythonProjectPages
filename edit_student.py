@@ -1,7 +1,7 @@
 import streamlit as st
 
 def app(my_class_room):
-    st.title("Edit Student Data")
+    st.title("Edit Student ")
     student_id = st.number_input("ENTER ID TO SEARCH",1,1000)
     student = my_class_room.get_student_by_id(student_id)
     if student :
