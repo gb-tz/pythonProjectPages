@@ -49,5 +49,8 @@ def main():
     elif page == "Delete":
         delete.app(st.session_state.my_class_room)
 
+    elif page == "About":
+        about.app()
+
 if __name__ == '__main__':
     main()

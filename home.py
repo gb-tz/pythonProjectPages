@@ -19,6 +19,6 @@ def app(my_class_room):
 
     rows = len(my_class_room.get_students_data()) * 35 + 35
     if len(my_class_room.students) > 0:
-        st.dataframe(my_class_room.get_students_data(), height = rows)
+        st.dataframe(my_class_room.generate_dataframe())
     else:
         st.write('no students in the classroom')

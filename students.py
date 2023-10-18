@@ -11,7 +11,7 @@ class Student:
         self.height = height
         self.weight = weight
         self.gender = gender
-        self.courses = {}
+        self.courses = {'Math': -1, 'History': -1, 'Physics': -1, 'English': -1, 'Biology': -1}
 
     def add_grade(self, course_name, grade):
         self.courses[course_name] = grade
@@ -25,7 +25,35 @@ class Student:
     def __str__(self):
         return f"id: {self.id} first name: {self.fname}, last name: {self.lname} genter: {self.genter} "
 
+    def get_bmi(self):
+        """
+        Calculate and return the BMI (Body Mass Index).
+        Formula: weight (kg) / height (m)^2
+        Note: Height should be converted from cm to m.
+        """
+        height_m = self.height / 100  # converting height to meters
+        bmi = self.weight / (height_m ** 2)
+        return bmi
 
+    def get_bmi_category(self):
+        """
+        Return the BMI category of the student based on their BMI value.
+
+        Categories:
+        - Underweight: Below 18.5
+        - Normal: 18.5-25
+        - Overweight: 25.0-30
+        - Obesity: 30 and above
+        """
+        bmi = self.get_bmi()
+        if bmi < 18.5:
+            return "Underweight"
+        elif bmi < 25:
+            return "Normal"
+        elif bmi < 30:
+            return "Overweight"
+        else:  # bmi >= 30
+            return "Obesity"
 class Classroom:
     def __init__(self, room_name):
         self.room_name = room_name
@@ -168,6 +196,44 @@ class Classroom:
             student.height = height
             student.weight = weight
             student.gender = gender
-            return True
 
+    def delete_student(self,id):
+        for i in range(len(self.students)):
+            if self.students[i].id == id :
+                del self.students[i]
+                return True
         return False
+
+    def get_min_student_id(self):
+        if not self.students:
+            return 1
+
+        el = [st.id for st in self.students]
+        min_id = min(el)
+
+        return min_id
+
+    def generate_dataframe(self):
+        data = []
+        for student in self.students:
+            student_data = {
+                'ID': student.id,
+                'First Name': student.fname,
+                'Last Name': student.lname,
+                'Date of Birth': student.dateBirth,
+                'Height': student.height,
+                'Weight': student.weight,
+                'Gender': student.gender,
+                'Math': student.courses['Math'],
+                'History': student.courses['History'],
+                'Physics': student.courses['Physics'],
+                'English': student.courses['English'],
+                'Biology': student.courses['Biology'],
+                'Average Grade': student.average_grade(),
+                'BMI': student.get_bmi(),
+                'BMI Category': student.get_bmi_category()
+
+            }
+            data.append(student_data)
+        df = pd.DataFrame(data)
+        return df
