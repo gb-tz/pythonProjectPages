@@ -54,6 +54,9 @@ class Student:
             return "Overweight"
         else:  # bmi >= 30
             return "Obesity"
+
+
+
 class Classroom:
     def __init__(self, room_name):
         self.room_name = room_name
@@ -237,3 +240,58 @@ class Classroom:
             data.append(student_data)
         df = pd.DataFrame(data)
         return df
+
+    def sort_students_by_id(self):
+        """
+        Sort the students by id using Python's built-in sort function.
+        """
+        self.students.sort(key=lambda student: student.id)
+
+    def bubble_sort_students_by_grade(self):
+        """
+        Sorts a list of students based on their average grade using bubble sort.
+
+        Parameters:
+        - students (list): A list of Student instances.
+
+        Returns:
+        list: A list containing sorted Student instances.
+        """
+        n = len(self.students)
+        # Traverse through all elements in the list
+        for i in range(1, n):
+            # Last i elements are already in place, no need to check them
+            for j in range(n - 1, i - 1, -1):
+
+                # Traverse the list from 0 to n-i-1.
+                # Swap if the element found is greater than the next element
+                if self.students[j - 1].average_grade() < self.students[j].average_grade():
+                    self.students[j - 1], self.students[j] = self.students[j], self.students[j - 1]  # swap values
+
+    def sort_students_by_name(self):
+        n = len(self.students)
+        for i in range(n):
+            for j in range(i + 1, n):
+                pass
+
+    def selection_sort_students_by_bmi(self):
+        n= len(self.students)
+        for i in range(n):
+            min_idx = i
+            for j in range(i+1,n):
+                if self.students[min_idx].get_bmi() > self.students[j].get_bmi():
+                    min_idx = j
+            self.students[i],self.students[min_idx]=self.students[min_idx],self.students[i]
+
+    def binary_search_id(self,target_id):
+        left = 0
+        right = len(self.students)-1
+        while left<=right:
+            mid = left+right//2
+            if self.students[mid]<target_id:
+                left = mid + 1
+            elif self.students[mid]>target_id:
+                right = mid - 1
+            else:
+                return self.students[mid]
+        return None
